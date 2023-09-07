@@ -1,9 +1,8 @@
-import app from "./app.js";
-
 import mongoose from "mongoose";
 
-const DB_HOST =
-  "mongodb+srv://vovaplyuto:4zdbB6hfUQc7i7Zk@cluster0.f6hkse6.mongodb.net/db-contacts?retryWrites=true&w=majority";
+import app from "./app.js";
+
+const { DB_HOST, PORT = 3000 } = process.env;
 
 mongoose.set("strictQuery", true);
 
@@ -12,8 +11,8 @@ mongoose
   .then(() => {
     console.log("Database connection successful");
 
-    app.listen(3000, () => {
-      console.log("Server running. Use our API on port: 3000");
+    app.listen(PORT, () => {
+      console.log(`Server running. Use our API on port: ${PORT}`);
     });
   })
   .catch((error) => {
