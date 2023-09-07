@@ -1,9 +1,27 @@
 import Joi from "joi";
 
 const addSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
+  name: Joi.string().required().messages({
+    "any.required": "missing required name field",
+  }),
+  email: Joi.string().required().messages({
+    "any.required": "missing required email field",
+  }),
+  phone: Joi.string().required().messages({
+    "any.required": "missing required phone field",
+  }),
+  favorite: Joi.boolean(),
 });
 
-export default addSchema;
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean()
+    .required()
+    .messages({ "any.required": "missing field favorite" }),
+});
+
+const schemas = {
+  addSchema,
+  updateFavoriteSchema,
+};
+
+export default schemas;
