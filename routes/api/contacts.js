@@ -1,7 +1,7 @@
 import express from "express";
 
 import validateBody from "../../middlewares/validateBody.js";
-import { addSchema, updateFavoriteSchema } from "../../models/Contact.js";
+import { addSchema, updateFavoriteSchema } from '../../models/Contact.js'
 import { isValidId } from "../../middlewares/index.js";
 import { ctrlWrapper } from "../../helpers/index.js";
 import {
