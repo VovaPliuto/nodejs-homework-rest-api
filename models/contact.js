@@ -3,6 +3,8 @@ import Joi from "joi";
 
 import { handleMongooseError, runValidateAtUpdate } from "./hooks.js";
 
+console.log("Fixes");
+
 const contactSchema = new Schema(
   {
     name: {
