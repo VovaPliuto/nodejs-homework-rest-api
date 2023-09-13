@@ -1,11 +1,11 @@
 import express from "express";
 
 import validateBody from "../../middlewares/validateBody.js";
-import * as contactsSchemas from "../../models/Contact.js";
+import { addSchema, updateFavoriteSchema } from "../../models/Contact.js";
 import { isValidId } from "../../middlewares/index.js";
 import { ctrlWrapper } from "../../helpers/index.js";
 import {
-getAll,
+  getAll,
   getById,
   add,
   deleteById,
@@ -22,10 +22,8 @@ const contactCtrl = {
   updateStatusContact: ctrlWrapper(updateStatusContact),
 };
 
-const contactAddValidate = validateBody(contactsSchemas.addSchema);
-const contactUpdateFavoriteValidate = validateBody(
-  contactsSchemas.updateFavoriteSchema
-);
+const contactAddValidate = validateBody(addSchema);
+const contactUpdateFavoriteValidate = validateBody(updateFavoriteSchema);
 
 const contactsRouter = express.Router();
 
@@ -48,7 +46,7 @@ contactsRouter.patch(
   "/:contactId/favorite",
   isValidId,
   contactUpdateFavoriteValidate,
-  contactCtrl.updateStatusContact,
+  contactCtrl.updateStatusContact
 );
 
 export default contactsRouter;
