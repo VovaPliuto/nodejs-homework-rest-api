@@ -1,8 +1,26 @@
 import Contact from "../../models/Contact.js";
-import { ctrlWrapper } from "../../helpers/index.js";
 
 const getAll = async (req, res) => {
-  const contacts = await Contact.find({}, "-createdAt -updatedAt");
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 20, favorite } = req.query;
+  const skip = (page - 1) * limit;
+
+  if (favorite !== undefined) {
+    const contacts = await Contact.find(
+      { owner, favorite },
+      "-createdAt -updatedAt",
+      {
+        skip,
+        limit,
+      }
+    ).populate("owner", "email");
+    return res.json(contacts);
+  }
+
+  const contacts = await Contact.find({ owner }, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  }).populate("owner", "email");
   res.json(contacts);
 };
 
