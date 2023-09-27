@@ -1,10 +1,12 @@
 import express from "express";
 
-import { addSchema, updateFavoriteSchema } from "../../models/Contact.js";
+import { addSchema, updateFavoriteSchema } from "../../models/contact.js";
+
 import {
   isValidId,
   validateBody,
   authenticate,
+  upload,
 } from "../../middlewares/index.js";
 import { ctrlWrapper } from "../../helpers/index.js";
 import {
@@ -36,7 +38,14 @@ contactsRouter.get("/", contactCtrl.getAll);
 
 contactsRouter.get("/:contactId", isValidId, contactCtrl.getById);
 
-contactsRouter.post("/", contactAddValidate, contactCtrl.add);
+//upload.array("cover", 8)
+//upload.fields([{name: "cover", maxCount: 1}, {name: "subcover", maxCount: 2}])
+contactsRouter.post(
+  "/",
+  upload.single("avatar"),
+  contactAddValidate,
+  contactCtrl.add
+);
 
 contactsRouter.delete("/:contactId", isValidId, contactCtrl.deleteById);
 

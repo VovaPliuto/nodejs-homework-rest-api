@@ -6,9 +6,13 @@ import {
   logout,
   getCurrent,
   updateSubscription,
+  updateAvatar,
 } from "../../controllers/users/index.js";
-import { userSignupSchema, updateSubscriptionSchema } from "../../models/User.js";
-import { validateBody } from "../../middlewares/index.js";
+import {
+  userSignupSchema,
+  updateSubscriptionSchema,
+} from "../../models/User.js";
+import { validateBody, upload } from "../../middlewares/index.js";
 import { ctrlWrapper } from "../../helpers/index.js";
 import { authenticate } from "../../middlewares/index.js";
 
@@ -18,6 +22,7 @@ const authController = {
   logout: ctrlWrapper(logout),
   getCurrent: ctrlWrapper(getCurrent),
   updateSubscription: ctrlWrapper(updateSubscription),
+  updateAvatar: ctrlWrapper(updateAvatar),
 };
 
 const authRouter = express.Router();
@@ -33,6 +38,13 @@ authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logout);
 
-authRouter.patch("/", authenticate, updateSubscriptionValidate, authController.updateSubscription);
+authRouter.patch(
+  "/",
+  authenticate,
+  updateSubscriptionValidate,
+  authController.updateSubscription
+);
+
+authRouter.patch("/avatars", authenticate, upload.single("avatar"), updateAvatar);
 
 export default authRouter;
