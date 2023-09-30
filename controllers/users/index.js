@@ -4,3 +4,5 @@ export { default as logout } from "./logout.js";
 export { default as getCurrent } from "./getCurrent.js";
 export { default as updateSubscription } from "./updateSubscription.js";
 export { default as updateAvatar } from "./updatedAvatar.js";
+export { default as verifyEmail } from "./verifyEmail.js";
+export { default as resendVerifyEmail } from "./resendVerifyEmail.js";
